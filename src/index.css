@@ -99,9 +99,8 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
 .logo { position: relative; display: inline-flex; align-items: baseline; gap: 2px; line-height: 1; padding-top: 8px; }
 .logo__super { font-family: var(--f-script); font-weight: 700; font-size: 2.1rem; color: var(--orange); transform: rotate(-6deg); }
 .logo__buggies { font-family: var(--f-display); font-weight: 800; font-style: italic; font-size: 1.6rem; color: var(--ink); letter-spacing: -0.02em; }
-.logo__sub { position: absolute; right: 2px; top: -6px; font-size: 0.56rem; font-weight: 800; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
-.logo--light .logo__buggies { color: #fff; }
-.logo--light .logo__sub { color: rgba(255, 255, 255, 0.6); }
+.logo__peak { position: absolute; width: 40px; right: 4px; top: -4px; color: var(--ink); }
+.logo--light .logo__buggies, .logo--light .logo__peak { color: #fff; }
 
 /* ---------- Nav ---------- */
 .nav { position: fixed; inset: 0 0 auto; z-index: 100; transition: background 0.35s, box-shadow 0.35s, backdrop-filter 0.35s; }
