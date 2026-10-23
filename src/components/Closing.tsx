@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
-import InstagramIcon from './InstagramIcon';
+import TikTokIcon from './TikTokIcon';
 import Logo from './Logo';
 import MagneticButton from './MagneticButton';
 import RevealText from './RevealText';
 import { useLang } from '../i18n';
 import { useBooking } from '../booking';
 import { useParallax } from '../hooks/useParallax';
-import { CONFIG, instagramUrl, waLink } from '../config';
+import { CONFIG, tiktokUrl, waLink } from '../config';
 import { EXPERIENCES, TOURS } from '../data';
 
 export function CtaBand() {
@@ -54,7 +54,6 @@ export function Footer() {
             <li><a href="#experiencias">{t.nav.experiences}</a></li>
             <li><a href="#galeria">{t.nav.gallery}</a></li>
             <li><a href="#faq">{t.nav.faq}</a></li>
-            <li><a href="#transporte">{t.nav.transport}</a></li>
             <li><a href="#reservar">{t.nav.book}</a></li>
           </ul>
         </div>
@@ -71,7 +70,7 @@ export function Footer() {
           <ul className="footer__contact">
             <li><a href={waLink(t.booking.waIntro)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> WhatsApp {CONFIG.phoneDisplay}</a></li>
             <li><a href={CONFIG.phoneHref}><Phone size={16} /> {CONFIG.phoneDisplay}</a></li>
-            <li><a href={instagramUrl} target="_blank" rel="noopener noreferrer"><InstagramIcon size={16} /> @{CONFIG.instagram}</a></li>
+            <li><a href={tiktokUrl} target="_blank" rel="noopener noreferrer"><TikTokIcon size={16} /> @{CONFIG.tiktok}</a></li>
             <li><Clock size={16} /> {CONFIG.hours}</li>
             <li><MapPin size={16} /> {CONFIG.address}</li>
           </ul>

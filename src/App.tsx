@@ -8,8 +8,6 @@ import Hero from './components/Hero';
 import Tours from './components/Tours';
 import WhyUs from './components/WhyUs';
 import Experiences from './components/Experiences';
-import Transport from './components/Transport';
-import Reels from './components/Reels';
 import Gallery from './components/Gallery';
 import Steps from './components/Steps';
 import Faq from './components/Faq';
@@ -30,8 +28,6 @@ export default function App() {
               <Tours />
               <WhyUs />
               <Experiences />
-              <Transport />
-              <Reels />
               <Gallery />
               <Steps />
               <Booking />

@@ -1,20 +1,14 @@
-// Datos de contacto del negocio. Editar aquí y se actualiza toda la web.
 export const CONFIG = {
-  brand: 'Café Tours',
-  phoneDisplay: '+1 (809) 280-7227',
-  phoneHref: 'tel:+18092807227',
-  whatsapp: '18092807227',
-  address: 'Las Terrenas, Samaná, República Dominicana',
-  mapQuery: 'Las Terrenas, Samaná, República Dominicana',
-  hours: 'Abierto 24 horas',
-  instagram: 'cafetours_samana',
-  // Correo donde llegan las reservas del formulario (vía FormSubmit.co).
-  // Mientras esté vacío, el formulario envía la solicitud por WhatsApp.
-  // La primera vez que llegue un envío, FormSubmit manda un correo de activación a esta dirección.
+  brand: 'D Daniel Tours',
+  phoneDisplay: '+1 (829) 359-4745',
+  phoneHref: 'tel:+18293594745',
+  whatsapp: '18293594745',
+  address: 'Las Galeras, Samaná, República Dominicana',
+  mapQuery: 'Playa Las Galeras, Samaná, República Dominicana',
+  hours: 'Salidas todos los días',
+  tiktok: 'danielespinal84',
   bookingEmail: '',
 };
 
-export const waLink = (text: string) =>
-  `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
-
-export const instagramUrl = `https://www.instagram.com/${CONFIG.instagram}/`;
+export const waLink = (text: string) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+export const tiktokUrl = `https://www.tiktok.com/@${CONFIG.tiktok}`;

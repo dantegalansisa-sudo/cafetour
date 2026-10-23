@@ -22,10 +22,10 @@ export default function WhyUs() {
             animate={inView ? { clipPath: 'inset(0 0% 0 0 round 32px)' } : undefined}
             transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
           >
-            <motion.img src="/images/buggy-crucero-2.webp" alt="Buggy con un crucero de fondo en la bahía" style={{ y, scale: 1.18 }} loading="lazy" />
+            <motion.img src="/images/catamaran-2.webp" alt="Lancha anclada en una cala de Samaná" style={{ y, scale: 1.18 }} loading="lazy" />
           </motion.div>
           <motion.div className="why__float" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.7 }}>
-            <img src="/images/atv-playa.webp" alt="" loading="lazy" />
+            <img src="/images/playa-grupo.webp" alt="" loading="lazy" />
           </motion.div>
           <motion.div className="why__badge" initial={{ scale: 0, rotate: -30 }} whileInView={{ scale: 1, rotate: -8 }} viewport={{ once: true }} transition={{ delay: 0.8, type: 'spring', stiffness: 160 }}>
             <strong>{t.why.badgeTop}</strong>{t.why.badgeBottom}

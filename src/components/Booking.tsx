@@ -2,13 +2,13 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, Mail, MapPin, Phone, Send } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
-import InstagramIcon from './InstagramIcon';
+import TikTokIcon from './TikTokIcon';
 import SectionHead from './SectionHead';
 import MagneticButton from './MagneticButton';
 import { useLang } from '../i18n';
 import { useBooking } from '../booking';
 import { BOOKING_OPTIONS } from '../data';
-import { CONFIG, instagramUrl, waLink } from '../config';
+import { CONFIG, tiktokUrl, waLink } from '../config';
 
 type Form = { name: string; email: string; phone: string; tour: string; date: string; people: string; pickup: string; message: string };
 const EMPTY: Form = { name: '', email: '', phone: '', tour: '', date: '', people: '2', pickup: '', message: '' };
@@ -120,9 +120,9 @@ export default function Booking() {
               </a>
             </li>
             <li>
-              <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
-                <span className="booking__ic booking__ic--ig"><InstagramIcon size={20} /></span>
-                <span><small>{b.instagram}</small>@{CONFIG.instagram}</span>
+              <a href={tiktokUrl} target="_blank" rel="noopener noreferrer">
+                <span className="booking__ic booking__ic--tt"><TikTokIcon size={20} /></span>
+                <span><small>{b.tiktok}</small>@{CONFIG.tiktok}</span>
               </a>
             </li>
             {CONFIG.bookingEmail && (
@@ -156,9 +156,9 @@ export default function Booking() {
                 <h3>{b.successTitle}</h3>
                 <p>{CONFIG.bookingEmail ? b.successText : b.successWaText}</p>
                 <li>
-              <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
-                <span className="booking__ic booking__ic--ig"><InstagramIcon size={20} /></span>
-                <span><small>{b.instagram}</small>@{CONFIG.instagram}</span>
+              <a href={tiktokUrl} target="_blank" rel="noopener noreferrer">
+                <span className="booking__ic booking__ic--tt"><TikTokIcon size={20} /></span>
+                <span><small>{b.tiktok}</small>@{CONFIG.tiktok}</span>
               </a>
             </li>
             {CONFIG.bookingEmail && (

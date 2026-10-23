@@ -25,8 +25,8 @@ export default function Hero() {
 
   const cards = [
     { src: '/images/playa-grupo.webp', label: t.hero.cards[0], rot: -6 },
-    { src: '/images/caballos.webp', label: t.hero.cards[1], rot: 3 },
-    { src: '/images/barco-proa.webp', label: t.hero.cards[2], rot: -2 },
+    { src: '/images/barco-tobogan.webp', label: t.hero.cards[1], rot: 3 },
+    { src: '/images/barco-grupo.webp', label: t.hero.cards[2], rot: -2 },
   ];
   const statIcons = [Mountain, Clock, HeartHandshake];
 
@@ -86,7 +86,7 @@ export default function Hero() {
           >
             <motion.img
               src="/images/hero.webp"
-              alt="Pareja manejando un buggy por un sendero con vista al mar en Samaná"
+              alt="Amigos en la proa de la lancha navegando hacia la playa en Las Galeras"
               style={{ scale: imgScale, y: imgY }}
               fetchPriority="high"
             />
