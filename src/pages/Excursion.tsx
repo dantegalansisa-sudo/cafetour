@@ -1,0 +1,177 @@
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Backpack, Banknote, Building2, CalendarDays, Check, Clock, Minus, Plus, ShieldCheck, Sparkles, Sun, Users } from 'lucide-react';
+import RevealText from '../components/RevealText';
+import MagneticButton from '../components/MagneticButton';
+import WhatsAppIcon from '../components/WhatsAppIcon';
+import Booking from '../components/Booking';
+import SectionHead from '../components/SectionHead';
+import { PriceTag, TourCard } from '../components/Tours';
+import NotFound from './NotFound';
+import { useLang } from '../i18n';
+import { useBooking } from '../booking';
+import { useParallax } from '../hooks/useParallax';
+import { EXCURSIONS, findExcursion, fmt } from '../data';
+import { CONFIG, waLink } from '../config';
+import { cardVariants, containerVariants, EASINGS } from '../utils/easings';
+
+const today = () => new Date().toISOString().slice(0, 10);
+
+export default function ExcursionPage() {
+  const { slug } = useParams();
+  const ex = findExcursion(slug);
+  const { t } = useLang();
+  const x = t.excursion;
+  const { book } = useBooking();
+  const { ref, y } = useParallax(60);
+  // Cantidad (personas o lanchas) y fecha; se reinician al cambiar de excursión
+  const [pick, setPick] = useState<{ slug?: string; qty: number; date: string }>({ qty: 1, date: '' });
+  const cur = pick.slug === slug ? pick : { slug, qty: ex?.per === 'lancha' ? 1 : 2, date: '' };
+  const set = (p: Partial<typeof cur>) => setPick({ ...cur, ...p });
+
+  useEffect(() => {
+    document.title = ex ? `${ex.name} · ${CONFIG.brand} | Las Galeras, Samaná` : `${CONFIG.brand}`;
+  }, [ex]);
+
+  if (!ex) return <NotFound />;
+
+  const boat = ex.per === 'lancha';
+  const max = boat ? 5 : 20;
+  const total = ex.priceUSD ? ex.priceUSD * cur.qty : 0;
+  const qtyLabel = boat ? (cur.qty === 1 ? x.boat : x.boats) : cur.qty === 1 ? t.quick.person : t.quick.persons;
+  const others = EXCURSIONS.filter((e) => e.slug !== ex.slug).sort((a, b) => Number(b.category === ex.category) - Number(a.category === ex.category)).slice(0, 3);
+  const waText = [
+    x.waText(ex.name),
+    `• ${boat ? x.howManyBoats : x.howMany}: ${cur.qty}`,
+    cur.date && `• ${x.date}: ${cur.date}`,
+    total && `• ${x.total}: ${fmt(total)}`,
+  ].filter(Boolean).join('\n');
+  const reserve = () => book({ tour: ex.name, date: cur.date || undefined, people: boat ? undefined : String(cur.qty) });
+
+  return (
+    <>
+      <section className="xhero" ref={ref}>
+        <motion.img className="xhero__img" src={ex.gallery[0]} alt={ex.name} style={{ y, scale: 1.15 }} />
+        <div className="xhero__shade" />
+        <div className="container xhero__inner">
+          <Link to="/#tours" className="xhero__back"><ArrowLeft size={16} /> {x.back}</Link>
+          <ul className="tour__tags xhero__tags">
+            {ex.tags.map((tag) => <li key={tag}>{tag}</li>)}
+          </ul>
+          <RevealText tag="h1" className="xhero__title" animateOnMount delay={0.2}>{ex.name}</RevealText>
+          <motion.p className="xhero__lead" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>{ex.short}</motion.p>
+          <motion.div className="xhero__facts" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+            {ex.priceUSD && <span><strong>{boat ? `${t.tours.priceFrom} ` : ''}{fmt(ex.priceUSD)}</strong> {boat ? t.tours.perBoat : t.tours.perPerson}</span>}
+            <span><Clock size={16} /> {ex.duration}</span>
+          </motion.div>
+          <motion.div className="xhero__ctas" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+            <MagneticButton className="btn btn--primary btn--lg" onClick={reserve}>
+              {x.book} <ArrowRight size={18} />
+            </MagneticButton>
+            <MagneticButton className="btn btn--wa btn--lg" href={waLink(waText)} target="_blank">
+              <WhatsAppIcon size={18} /> WhatsApp
+            </MagneticButton>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="section section--tight">
+        <div className="container xbody">
+          <div className="xbody__main">
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASINGS.smooth }}>
+              <p className="eyebrow">{x.about}</p>
+              <p className="xbody__desc">{ex.description}</p>
+              {ex.note && <p className="xnote">{ex.note}</p>}
+            </motion.div>
+
+            <h2 className="xbody__h"><Sparkles size={20} /> {x.highlights}</h2>
+            <motion.ul className="xhl" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+              {ex.highlights.map((h) => <motion.li key={h} variants={cardVariants}>{h}</motion.li>)}
+            </motion.ul>
+
+            <div className="xlists">
+              <div>
+                <h2 className="xbody__h"><Check size={20} /> {x.includes}</h2>
+                <ul className="xlist">
+                  {ex.includes.map((i) => <li key={i}><Check size={16} /> {i}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h2 className="xbody__h"><Backpack size={20} /> {x.bring}</h2>
+                <ul className="xlist xlist--muted">
+                  {ex.bring.map((i) => <li key={i}><Check size={16} /> {i}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            {ex.gallery.length > 1 && (
+              <div className={`xgallery xgallery--${Math.min(ex.gallery.length - 1, 3)}`}>
+                {ex.gallery.slice(1).map((g, i) => (
+                  <motion.img
+                    key={g}
+                    src={g}
+                    alt={`${ex.name} ${i + 2}`}
+                    loading="lazy"
+                    initial={{ opacity: 0, scale: 0.94 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.6 }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <aside className="xcard">
+            <div className="xcard__price">
+              <PriceTag ex={ex} />
+              {ex.priceUSD && <small>{boat ? `${t.tours.perBoat} · ${ex.perNote}` : t.tours.perPerson}</small>}
+            </div>
+            <p className="xcard__row"><Clock size={18} /> {x.duration}: <strong>{ex.duration}</strong></p>
+            <p className="xcard__row xcard__row--small"><Sun size={18} /> {ex.schedule}</p>
+            <label className="xcard__field">
+              <span><CalendarDays size={16} /> {x.date}</span>
+              <input type="date" min={today()} value={cur.date} onChange={(e) => set({ date: e.target.value })} />
+            </label>
+            <div className="xcard__calc">
+              <span>{boat ? <Sun size={16} /> : <Users size={16} />} {boat ? x.howManyBoats : x.howMany}</span>
+              <div className="qty">
+                <button type="button" onClick={() => set({ qty: Math.max(1, cur.qty - 1) })} disabled={cur.qty <= 1} aria-label="Menos"><Minus size={18} /></button>
+                <strong>{cur.qty}<small>{qtyLabel}</small></strong>
+                <button type="button" onClick={() => set({ qty: Math.min(max, cur.qty + 1) })} disabled={cur.qty >= max} aria-label="Más"><Plus size={18} /></button>
+              </div>
+            </div>
+            {total > 0 && (
+              <p className="xcard__total"><span>{x.total}</span> {fmt(total)}</p>
+            )}
+            <button className="btn btn--primary btn--lg xcard__btn" onClick={reserve}>
+              {x.book} <ArrowRight size={18} />
+            </button>
+            <a className="btn btn--wa btn--lg xcard__btn" href={waLink(waText)} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon size={18} /> {x.wa}
+            </a>
+            <div className="xcard__methods">
+              <span><Banknote size={14} /> {x.cash}</span>
+              <span><Building2 size={14} /> {x.transfer}</span>
+            </div>
+            <ul className="xcard__trust">
+              {x.trust.map((tr) => <li key={tr}><ShieldCheck size={16} /> {tr}</li>)}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <Booking />
+
+      <section className="section">
+        <div className="container">
+          <SectionHead eyebrow={t.experiences.eyebrow} title={x.more} accent={x.moreAccent} />
+          <motion.div className="tours tours--3" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+            {others.map((o) => <TourCard key={o.slug} tour={o} />)}
+          </motion.div>
+        </div>
+      </section>
+    </>
+  );
+}

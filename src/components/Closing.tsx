@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
 import WhatsAppIcon from './WhatsAppIcon';
 import TikTokIcon from './TikTokIcon';
@@ -9,7 +10,7 @@ import { useLang } from '../i18n';
 import { useBooking } from '../booking';
 import { useParallax } from '../hooks/useParallax';
 import { CONFIG, tiktokUrl, waLink } from '../config';
-import { EXPERIENCES, TOURS } from '../data';
+import { EXCURSIONS, excursionPath } from '../data';
 
 export function CtaBand() {
   const { t } = useLang();
@@ -49,19 +50,19 @@ export function Footer() {
         <div>
           <h4>{f.links}</h4>
           <ul>
-            <li><a href="#inicio">{t.nav.home}</a></li>
-            <li><a href="#tours">{t.nav.tours}</a></li>
-            <li><a href="#experiencias">{t.nav.experiences}</a></li>
-            <li><a href="#galeria">{t.nav.gallery}</a></li>
-            <li><a href="#faq">{t.nav.faq}</a></li>
-            <li><a href="#reservar">{t.nav.book}</a></li>
+            <li><Link to="/#inicio">{t.nav.home}</Link></li>
+            <li><Link to="/#tours">{t.nav.tours}</Link></li>
+            <li><Link to="/#experiencias">{t.nav.experiences}</Link></li>
+            <li><Link to="/#galeria">{t.nav.gallery}</Link></li>
+            <li><Link to="/#faq">{t.nav.faq}</Link></li>
+            <li><Link to="/#reservar">{t.nav.book}</Link></li>
           </ul>
         </div>
         <div>
           <h4>{f.adventures}</h4>
           <ul>
-            {[...TOURS.slice(0, 3), ...EXPERIENCES.slice(0, 3)].map((x) => (
-              <li key={x.id}><a href={TOURS.some((tour) => tour.id === x.id) ? '#tours' : '#experiencias'}>{x.name}</a></li>
+            {EXCURSIONS.slice(0, 6).map((x) => (
+              <li key={x.slug}><Link to={excursionPath(x.slug)}>{x.name}</Link></li>
             ))}
           </ul>
         </div>

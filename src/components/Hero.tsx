@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight, CalendarDays, Clock, HeartHandshake, MapPin, Mountain, Users } from 'lucide-react';
 import RevealText from './RevealText';
 import MagneticButton from './MagneticButton';
@@ -10,6 +11,8 @@ import { BOOKING_OPTIONS } from '../data';
 import { EASINGS } from '../utils/easings';
 
 const today = () => new Date().toISOString().slice(0, 10);
+
+const MotionLink = motion.create(Link);
 
 export default function Hero() {
   const { t } = useLang();
@@ -24,9 +27,9 @@ export default function Hero() {
   const cardsY = useTransform(scrollY, [0, 700], [0, -70]);
 
   const cards = [
-    { src: '/images/playa-grupo.webp', label: t.hero.cards[0], rot: -6 },
-    { src: '/images/barco-tobogan.webp', label: t.hero.cards[1], rot: 3 },
-    { src: '/images/barco-grupo.webp', label: t.hero.cards[2], rot: -2 },
+    { src: '/images/playa-grupo.webp', label: t.hero.cards[0], rot: -6, to: '/excursiones/playa-rincon' },
+    { src: '/images/barco-tobogan.webp', label: t.hero.cards[1], rot: 3, to: '/excursiones/playa-fronton' },
+    { src: '/images/barco-grupo.webp', label: t.hero.cards[2], rot: -2, to: '/excursiones/ballenas' },
   ];
   const statIcons = [Mountain, Clock, HeartHandshake];
 
@@ -111,8 +114,8 @@ export default function Hero() {
           </motion.div>
           <motion.div className="hero__cards" style={{ y: cardsY }}>
             {cards.map((c, i) => (
-              <motion.a
-                href="#experiencias"
+              <MotionLink
+                to={c.to}
                 key={c.src}
                 className="polaroid"
                 initial={{ opacity: 0, y: 60, rotate: 0 }}
@@ -122,7 +125,7 @@ export default function Hero() {
               >
                 <img src={c.src} alt="" loading="lazy" />
                 <span>{c.label}</span>
-              </motion.a>
+              </MotionLink>
             ))}
           </motion.div>
         </div>

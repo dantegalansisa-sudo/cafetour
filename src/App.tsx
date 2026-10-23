@@ -1,19 +1,15 @@
 import { MotionConfig } from 'framer-motion';
+import { Route, Routes } from 'react-router-dom';
 import { LangProvider } from './i18n';
 import { BookingProvider } from './booking';
 import { ToastProvider } from './components/Toast';
-import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Tours from './components/Tours';
-import WhyUs from './components/WhyUs';
-import Experiences from './components/Experiences';
-import Gallery from './components/Gallery';
-import Steps from './components/Steps';
-import Faq from './components/Faq';
-import Booking from './components/Booking';
-import { CtaBand, Footer } from './components/Closing';
+import { Footer } from './components/Closing';
 import FloatingActions from './components/FloatingActions';
+import ScrollManager from './components/ScrollManager';
+import Home from './pages/Home';
+import ExcursionPage from './pages/Excursion';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -21,18 +17,14 @@ export default function App() {
       <LangProvider>
         <ToastProvider>
           <BookingProvider>
-            <CustomCursor />
+            <ScrollManager />
             <Navbar />
             <main>
-              <Hero />
-              <Tours />
-              <WhyUs />
-              <Experiences />
-              <Gallery />
-              <Steps />
-              <Booking />
-              <Faq />
-              <CtaBand />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/excursiones/:slug" element={<ExcursionPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </main>
             <Footer />
             <FloatingActions />
